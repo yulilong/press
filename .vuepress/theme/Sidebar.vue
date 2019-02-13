@@ -49,29 +49,25 @@ export default {
 
   mounted() {
     var a = document.querySelectorAll('.sidebar-links > li > a')
-    // var a = document.querySelector('.sidebar-links > li > ul')
-    var flag = true;
+    var href = '';
+    console.log('href:', href)
     for (let i = 0; i < a.length; i++) {
         a[i].onclick = function(){
             var b = document.querySelector('.sidebar-links > li > ul')
-            if([i].href !== location.href) {
-                
-            }
-            location.pathname
-            if (flag) {
+            if(href !== location.href) {
+                href = location.href;
+                b.style.height = 'auto';
+                b.style.overflow = 'inherit';
+                console.log("不一样")
+            } else if (b.style.height === '' || b.style.height === 'auto') {
                 b.style.height = '0';
                 b.style.overflow = 'hidden'
             } else {
                 b.style.height = 'auto';
-                b.style.overflow = 'inherit'
+                b.style.overflow = 'inherit';
             }
-            flag = !flag
         }
     }
-    // a.onclick = function(){console.log('我被点击了')}
-    // a.style.height = '0';
-    // a.style.overflow = 'hidden'
-    console.log('a: ', a);
   },
 
   watch: {
