@@ -1,6 +1,7 @@
 module.exports = {
     title: '个人文档',
     description: '练习文档',
+    base: '/press/',     // 仓库名字是press,用于部署
     themeConfig: {
         nav: [
           { text: 'Home', link: '/' },                      // 根路径
