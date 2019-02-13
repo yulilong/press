@@ -1,1 +1,4 @@
 # .vuepress
+
+# 生成的静态资源
+.vuepress/dist/
