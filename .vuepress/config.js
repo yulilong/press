@@ -21,10 +21,10 @@ module.exports = {
             ],
             // 确保'/'侧边栏被最后定义。VuePress 会按顺序遍历侧边栏配置来寻找匹配的配置。
             '/': [
-                '',
+                // '',
                 'home1',
-                'home2',
-                'home3',
+                // 'home2',
+                // 'home3',
             ],
         },
         // sidebar: [{
