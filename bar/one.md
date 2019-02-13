@@ -1,4 +1,8 @@
-## bar 下的one文件
+---
+# title: 'one文件'
+sidebarDepth: 3
+---
+# 二、bar 下的one文件
 
 ## 一级标题
 
