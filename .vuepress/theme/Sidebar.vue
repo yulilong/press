@@ -8,7 +8,7 @@
     >
       <li
         v-for="(item, i) in items"
-        :key="i" v-on:click="fileName" class="arrow-prompt"
+        :key="i" v-on:click="fileName($event.target)"
       >
         <SidebarGroup
           v-if="item.type === 'group'"
@@ -40,7 +40,7 @@ export default {
   data () {
     return {
       openGroupIndex: 0,
-      href: '',
+      href: location.href,
     }
   },
 
@@ -73,22 +73,22 @@ export default {
       return isActive(this.$route, page.path)
     },
     // 点击标题
-    fileName () {
-        var b = document.querySelector('.sidebar-links > li > ul')
-        if(this.href !== location.href) {
-            this.href = location.href;
-            b.style.height = 'auto';
-            b.style.overflow = 'inherit';
-            b.classList.remove("mystyle");
-            console.log("不一样")
-        } else if (b.style.height === '' || b.style.height === 'auto') {
-            b.style.height = '0';
-            b.style.overflow = 'hidden';
-            b.classList.remove("mystyle");
-        } else {
-            b.style.height = 'auto';
-            b.style.overflow = 'inherit';
-            b.classList.add("mystyle");
+    fileName (a) {
+        // 确保点击是的md标题
+        if(a.href.indexOf('#') === -1) {
+            var b = document.querySelector('.sidebar-links > li > ul')
+            if(this.href !== location.href) {
+                this.href = location.href;
+                b.style.height = 'auto';
+                b.style.overflow = 'inherit';
+                console.log("不一样")
+            } else if (b.style.height === '' || b.style.height === 'auto') {
+                b.style.height = '0';
+                b.style.overflow = 'hidden';
+            } else {
+                b.style.height = 'auto';
+                b.style.overflow = 'inherit';
+            }
         }
     }
   }
@@ -109,18 +109,6 @@ function resolveOpenGroupIndex (route, items) {
 @import './styles/config.styl';
 
 .sidebar {
-    .arrow-prompt {
-        position: relative;
-        &::before {
-            content: '';
-            position: absolute;
-            border-top: 8px solid white;
-            border-left: 10px solid #3eaf7c;
-            border-bottom: 8px solid white;
-            left: 10px;
-            top: 8px;
-        }
-    }
   ul {
     padding: 0;
     margin: 0;
