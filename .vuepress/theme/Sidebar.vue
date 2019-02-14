@@ -8,7 +8,7 @@
     >
       <li
         v-for="(item, i) in items"
-        :key="i"
+        :key="i" v-on:click="fileName" class="arrow-prompt"
       >
         <SidebarGroup
           v-if="item.type === 'group'"
@@ -39,35 +39,13 @@ export default {
 
   data () {
     return {
-      openGroupIndex: 0
+      openGroupIndex: 0,
+      href: '',
     }
   },
 
   created () {
     this.refreshIndex()
-  },
-
-  mounted() {
-    var a = document.querySelectorAll('.sidebar-links > li > a')
-    var href = '';
-    console.log('href:', href)
-    for (let i = 0; i < a.length; i++) {
-        a[i].onclick = function(){
-            var b = document.querySelector('.sidebar-links > li > ul')
-            if(href !== location.href) {
-                href = location.href;
-                b.style.height = 'auto';
-                b.style.overflow = 'inherit';
-                console.log("不一样")
-            } else if (b.style.height === '' || b.style.height === 'auto') {
-                b.style.height = '0';
-                b.style.overflow = 'hidden'
-            } else {
-                b.style.height = 'auto';
-                b.style.overflow = 'inherit';
-            }
-        }
-    }
   },
 
   watch: {
@@ -93,6 +71,25 @@ export default {
 
     isActive (page) {
       return isActive(this.$route, page.path)
+    },
+    // 点击标题
+    fileName () {
+        var b = document.querySelector('.sidebar-links > li > ul')
+        if(this.href !== location.href) {
+            this.href = location.href;
+            b.style.height = 'auto';
+            b.style.overflow = 'inherit';
+            b.classList.remove("mystyle");
+            console.log("不一样")
+        } else if (b.style.height === '' || b.style.height === 'auto') {
+            b.style.height = '0';
+            b.style.overflow = 'hidden';
+            b.classList.remove("mystyle");
+        } else {
+            b.style.height = 'auto';
+            b.style.overflow = 'inherit';
+            b.classList.add("mystyle");
+        }
     }
   }
 }
@@ -112,6 +109,18 @@ function resolveOpenGroupIndex (route, items) {
 @import './styles/config.styl';
 
 .sidebar {
+    .arrow-prompt {
+        position: relative;
+        &::before {
+            content: '';
+            position: absolute;
+            border-top: 8px solid white;
+            border-left: 10px solid #3eaf7c;
+            border-bottom: 8px solid white;
+            left: 10px;
+            top: 8px;
+        }
+    }
   ul {
     padding: 0;
     margin: 0;

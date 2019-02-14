@@ -7,7 +7,6 @@ export default {
   props: ['item'],
 
   render (h, { parent: { $page, $site, $route }, props: { item }}) {
-    //   console.log('$page:', $page);
     // use custom active class matching logic
     // due to edge case of paths ending with / + hash
     const selfActive = isActive($route, item.path)
