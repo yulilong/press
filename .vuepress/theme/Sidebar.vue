@@ -38,16 +38,12 @@ export default {
   props: ['items'],
 
   data () {
-      if (process.client) {
-        require('external_library')
-      }
-      let href = '';
-      if (document) {
-          href = document.location.href
-      }
+    let href = '';
+    if (typeof window !== 'undefined') {
+        href = window.location.href
+    }
     return {
       openGroupIndex: 0,
-    //   href: window.location.href,
       href,
     }
   },
