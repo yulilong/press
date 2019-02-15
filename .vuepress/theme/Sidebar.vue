@@ -38,9 +38,17 @@ export default {
   props: ['items'],
 
   data () {
+      if (process.client) {
+        require('external_library')
+      }
+      let href = '';
+      if (document) {
+          href = document.location.href
+      }
     return {
       openGroupIndex: 0,
-      href: location.href,
+    //   href: window.location.href,
+      href,
     }
   },
 
