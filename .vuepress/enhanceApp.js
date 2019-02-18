@@ -6,33 +6,34 @@ function integrateGitalk (router) {
     const scriptGitalk = document.createElement('script');
     scriptGitalk.src = 'https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js';
     document.body.appendChild(scriptGitalk);
+    var path = '';
 
     router.afterEach((to) => {
-        console.log('router.afterEac', to);
-        console.log('scriptGitalk.onload', scriptGitalk.onload);
         if (scriptGitalk.onload) {
-            loadGitalk(to);
+            setTimeout(loadGitalk, 5, to)
         } else {
             scriptGitalk.onload = () => {
-                loadGitalk(to);
+                loadGitalk(to.fullPath);
             }
         }
     });
 
-    function loadGitalk () {
-        let commentsContainer = document.getElementById('gitalk-container');
-        const $page = document.querySelector('.page');
-        if (commentsContainer && $page) {
-            $page.removeChild(commentsContainer)
-        }
-        commentsContainer = document.createElement('div');
-        commentsContainer.id = 'gitalk-container';
-        commentsContainer.classList.add('content');
-        if ($page) {
-            $page.appendChild(commentsContainer);
-            if (typeof Gitalk !== 'undefined' && Gitalk instanceof Function) {
-                renderGitalk();
-                console.log(22222);
+    function loadGitalk (to) {
+        if (to.path !== path) {
+            path = to.path;
+            let commentsContainer = document.getElementById('gitalk-container');
+            const $page = document.querySelector('.page');
+            if (commentsContainer && $page) {
+                $page.removeChild(commentsContainer)
+            }
+            commentsContainer = document.createElement('div');
+            commentsContainer.id = 'gitalk-container';
+            commentsContainer.classList.add('content');
+            if ($page) {
+                $page.appendChild(commentsContainer);
+                if (typeof Gitalk !== 'undefined' && Gitalk instanceof Function) {
+                    renderGitalk();
+                }
             }
         }
     }
@@ -48,7 +49,6 @@ function integrateGitalk (router) {
             language: 'zh-CN',
         });
         gitalk.render('gitalk-container');
-        console.log(11111);
     }
     window.loadGitalk = loadGitalk;
 }
@@ -56,23 +56,6 @@ function integrateGitalk (router) {
 export default ({ Vue, options, router }) => {
     try {
         document && integrateGitalk(router)
-        var _wr = function (type) {
-            var orig = history[type];
-            return function () {
-                var rv = orig.apply(this, arguments);
-                var e = new Event(type);
-                e.arguments = arguments;
-                window.dispatchEvent(e);
-                return rv;
-            };
-        };
-        history.pushState = _wr('pushState');
-        window.addEventListener('pushState', function(e) {
-            // console.log('THEY DID IT AGAIN! pushState 2222222');
-            // window.loadGitalk();
-            console.log(33333);
-        });
-         
     } catch (e) {
         console.error(e.message)
     }

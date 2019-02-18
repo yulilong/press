@@ -85,7 +85,6 @@ export default {
                 this.href = location.href;
                 b.style.height = 'auto';
                 b.style.overflow = 'inherit';
-                console.log("不一样")
             } else if (b.style.height === '' || b.style.height === 'auto') {
                 b.style.height = '0';
                 b.style.overflow = 'hidden';
