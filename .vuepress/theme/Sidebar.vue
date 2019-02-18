@@ -80,18 +80,27 @@ export default {
     fileName (a) {
         // 确保点击是的md标题
         if(a.href.indexOf('#') === -1) {
-            var b = document.querySelector('.sidebar-links > li > ul')
-            if(this.href !== location.href) {
-                this.href = location.href;
-                b.style.height = 'auto';
-                b.style.overflow = 'inherit';
-            } else if (b.style.height === '' || b.style.height === 'auto') {
-                b.style.height = '0';
-                b.style.overflow = 'hidden';
-            } else {
-                b.style.height = 'auto';
-                b.style.overflow = 'inherit';
-            }
+            // 延迟执行，让下面能获取到二级菜单
+            setTimeout(this.changeStyle,5);
+        }
+    },
+    // 切换二级菜单
+    changeStyle () {
+        var b = document.querySelector('.sidebar-links > li > ul')
+        // 如果侧边栏是分组的
+        if (this.items[0].type === 'group') {
+            b = document.querySelector('.sidebar-links .sidebar-group-items > li > ul');
+        }
+        if(this.href !== location.href) {
+            this.href = location.href;
+            b.style.height = 'auto';
+            b.style.overflow = 'inherit';
+        } else if (b.style.height === '' || b.style.height === 'auto') {
+            b.style.height = '0';
+            b.style.overflow = 'hidden';
+        } else {
+            b.style.height = 'auto';
+            b.style.overflow = 'inherit';
         }
     }
   }
