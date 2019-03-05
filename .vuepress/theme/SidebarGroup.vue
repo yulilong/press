@@ -43,7 +43,6 @@ export default {
 
 <style lang="stylus">
 .sidebar-group
-  border 1px solid;
   &:not(.first)
     margin-top 1em
   .sidebar-group

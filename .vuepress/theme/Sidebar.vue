@@ -78,19 +78,22 @@ export default {
     },
     // 点击标题
     fileName (a) {
-        // 确保点击是的md标题
-        if(a.href.indexOf('#') === -1) {
-            // 延迟执行，让下面能获取到二级菜单
-            setTimeout(this.changeStyle,5);
+        var nextSibling = a.nextSibling;
+        // 点击没有子标题时 nextSibling === null，点击的是分组侧边栏时 nextSibling === #text
+        // 当点击的标题有子标题时，才收缩标题
+        if (nextSibling && nextSibling.tagName === 'UL') {
+            setTimeout(this.changeStyle,5, a.nextSibling);
         }
+        // setTimeout(this.changeStyle,5);
+        // 确保点击是的md标题
+        // if(a.href && a.href.indexOf('#') === -1) {
+        //     // 延迟执行，让下面能获取到二级菜单
+        //     setTimeout(this.changeStyle,5);
+        //     console.log(22222);
+        // }
     },
     // 切换二级菜单
-    changeStyle () {
-        var b = document.querySelector('.sidebar-links > li > ul')
-        // 如果侧边栏是分组的
-        if (this.items[0].type === 'group') {
-            b = document.querySelector('.sidebar-links .sidebar-group-items > li > ul');
-        }
+    changeStyle (b) {
         if(this.href !== location.href) {
             this.href = location.href;
             b.style.height = 'auto';

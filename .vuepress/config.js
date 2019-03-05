@@ -6,6 +6,7 @@ module.exports = {
         nav: [
           { text: 'Home', link: '/' },                      // 根路径
           { text: 'bar/one', link: '/bar/one' },
+          { text: 'page-a/a', link: '/page-a/a' },
           { text: 'External', link: 'https://google.com' }, // 外部链接
         ],
         sidebar: {
